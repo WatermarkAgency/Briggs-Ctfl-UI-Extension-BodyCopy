@@ -23,7 +23,7 @@ interface AppProps {
 interface AppState {
   title?: string;
   body?: string;
-  hasAbstract: boolean;
+  hasImage: boolean;
   abstract?: string;
 }
 
@@ -35,7 +35,7 @@ class App extends React.Component<AppProps, AppState> {
       title: props.sdk.entry.fields.title.getValue(),
       body: props.sdk.entry.fields.body.getValue(),
       abstract: props.sdk.entry.fields.abstract.getValue(),
-      hasAbstract: props.sdk.entry.fields.hasAbstract.getValue()
+      hasImage: props.sdk.entry.fields.hasImage.getValue()
     };
   }
 
@@ -51,10 +51,10 @@ class App extends React.Component<AppProps, AppState> {
     this.props.sdk.entry.fields.abstract.setValue(event.target.value);
   };
 
-  onHasAbstractChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const hasAbstract = event.target.value === 'yes';
-    this.setState({ hasAbstract });
-    this.props.sdk.entry.fields.hasAbstract.setValue(hasAbstract);
+  onhasImageChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const hasImage = event.target.value === 'yes';
+    this.setState({ hasImage });
+    this.props.sdk.entry.fields.hasImage.setValue(hasImage);
   };
 
   render() {
@@ -71,23 +71,23 @@ class App extends React.Component<AppProps, AppState> {
           <FieldGroup row={false}>
             <RadioButtonField
               labelText="Yes"
-              checked={this.state.hasAbstract}
+              checked={this.state.hasImage}
               value="yes"
-              onChange={this.onHasAbstractChangeHandler}
+              onChange={this.onhasImageChangeHandler}
               name="abstractOption"
               id="yesCheckbox"
             />
             <RadioButtonField
               labelText="No"
-              checked={!this.state.hasAbstract}
+              checked={!this.state.hasImage}
               value="no"
-              onChange={this.onHasAbstractChangeHandler}
+              onChange={this.onhasImageChangeHandler}
               name="abstractOption"
               id="noCheckbox"
             />
           </FieldGroup>
         </Typography>
-        {this.state.hasAbstract && (
+        {this.state.hasImage && (
           <Typography>
             <SectionHeading>Abstract</SectionHeading>
             <Textarea onChange={this.onAbstractChangeHandler} value={this.state.abstract} />
