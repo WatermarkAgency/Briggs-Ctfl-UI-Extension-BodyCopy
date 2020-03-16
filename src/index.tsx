@@ -21,7 +21,10 @@ interface AppProps {
 }
 
 interface AppState {
-  hasImage: boolean;
+  title?: string;
+  body?: string;
+  hasAbstract: boolean;
+  abstract?: string;
 }
 
 class App extends React.Component<AppProps, AppState> {
@@ -29,14 +32,29 @@ class App extends React.Component<AppProps, AppState> {
     super(props);
 
     this.state = {
-      hasImage: props.sdk.entry.fields.hasImage.getValue()
+      title: props.sdk.entry.fields.title.getValue(),
+      body: props.sdk.entry.fields.body.getValue(),
+      abstract: props.sdk.entry.fields.abstract.getValue(),
+      hasAbstract: props.sdk.entry.fields.hasAbstract.getValue()
     };
   }
 
-  onhasImageChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const hasImage = event.target.value === 'yes';
-    this.setState({ hasImage });
-    this.props.sdk.entry.fields.hasImage.setValue(hasImage);
+  onTitleChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.props.sdk.entry.fields.title.setValue(event.target.value);
+  };
+
+  onBodyChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.props.sdk.entry.fields.body.setValue(event.target.value);
+  };
+
+  onAbstractChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.props.sdk.entry.fields.abstract.setValue(event.target.value);
+  };
+
+  onHasAbstractChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const hasAbstract = event.target.value === 'yes';
+    this.setState({ hasAbstract });
+    this.props.sdk.entry.fields.hasAbstract.setValue(hasAbstract);
   };
 
   render() {
@@ -45,30 +63,34 @@ class App extends React.Component<AppProps, AppState> {
         <Typography>
           <DisplayText>Entry extension demo</DisplayText>
           <Paragraph>This demo uses a single UI Extension to render all UI for an entry.</Paragraph>
-
-          <SectionHeading>Has image?</SectionHeading>
+          <SectionHeading>Title</SectionHeading>
+          <TextInput onChange={this.onTitleChangeHandler} value={this.state.title} />
+          <SectionHeading>Body</SectionHeading>
+          <Textarea onChange={this.onBodyChangeHandler} value={this.state.body} />
+          <SectionHeading>Has abstract?</SectionHeading>
           <FieldGroup row={false}>
             <RadioButtonField
               labelText="Yes"
-              checked={this.state.hasImage}
+              checked={this.state.hasAbstract}
               value="yes"
-              onChange={this.onhasImageChangeHandler}
-              name="hasImage"
+              onChange={this.onHasAbstractChangeHandler}
+              name="abstractOption"
               id="yesCheckbox"
             />
             <RadioButtonField
               labelText="No"
-              checked={!this.state.hasImage}
+              checked={!this.state.hasAbstract}
               value="no"
-              onChange={this.onhasImageChangeHandler}
-              name="hasImage"
+              onChange={this.onHasAbstractChangeHandler}
+              name="abstractOption"
               id="noCheckbox"
             />
           </FieldGroup>
         </Typography>
-        {this.state.hasImage && (
+        {this.state.hasAbstract && (
           <Typography>
-            <SectionHeading>Conditional Fields</SectionHeading>
+            <SectionHeading>Abstract</SectionHeading>
+            <Textarea onChange={this.onAbstractChangeHandler} value={this.state.abstract} />
           </Typography>
         )}
       </div>
