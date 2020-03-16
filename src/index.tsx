@@ -29,7 +29,7 @@ class App extends React.Component<AppProps, AppState> {
     super(props);
 
     this.state = {
-      hasImage: true
+      hasImage: props.sdk.entry.fields.hasImage.getValue()
     };
   }
 
@@ -46,7 +46,7 @@ class App extends React.Component<AppProps, AppState> {
           <DisplayText>Entry extension demo</DisplayText>
           <Paragraph>This demo uses a single UI Extension to render all UI for an entry.</Paragraph>
 
-          <SectionHeading>Has abstract?</SectionHeading>
+          <SectionHeading>Has image?</SectionHeading>
           <FieldGroup row={false}>
             <RadioButtonField
               labelText="Yes"
