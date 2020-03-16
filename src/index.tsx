@@ -21,10 +21,7 @@ interface AppProps {
 }
 
 interface AppState {
-  title?: string;
-  body?: string;
   hasImage: boolean;
-  abstract?: string;
 }
 
 class App extends React.Component<AppProps, AppState> {
@@ -32,24 +29,9 @@ class App extends React.Component<AppProps, AppState> {
     super(props);
 
     this.state = {
-      title: props.sdk.entry.fields.title.getValue(),
-      body: props.sdk.entry.fields.body.getValue(),
-      abstract: props.sdk.entry.fields.abstract.getValue(),
       hasImage: props.sdk.entry.fields.hasImage.getValue()
     };
   }
-
-  onTitleChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.props.sdk.entry.fields.title.setValue(event.target.value);
-  };
-
-  onBodyChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.props.sdk.entry.fields.body.setValue(event.target.value);
-  };
-
-  onAbstractChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.props.sdk.entry.fields.abstract.setValue(event.target.value);
-  };
 
   onhasImageChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const hasImage = event.target.value === 'yes';
@@ -63,10 +45,7 @@ class App extends React.Component<AppProps, AppState> {
         <Typography>
           <DisplayText>Entry extension demo</DisplayText>
           <Paragraph>This demo uses a single UI Extension to render all UI for an entry.</Paragraph>
-          <SectionHeading>Title</SectionHeading>
-          <TextInput onChange={this.onTitleChangeHandler} value={this.state.title} />
-          <SectionHeading>Body</SectionHeading>
-          <Textarea onChange={this.onBodyChangeHandler} value={this.state.body} />
+
           <SectionHeading>Has abstract?</SectionHeading>
           <FieldGroup row={false}>
             <RadioButtonField
@@ -74,7 +53,7 @@ class App extends React.Component<AppProps, AppState> {
               checked={this.state.hasImage}
               value="yes"
               onChange={this.onhasImageChangeHandler}
-              name="abstractOption"
+              name="hasImage"
               id="yesCheckbox"
             />
             <RadioButtonField
@@ -82,15 +61,14 @@ class App extends React.Component<AppProps, AppState> {
               checked={!this.state.hasImage}
               value="no"
               onChange={this.onhasImageChangeHandler}
-              name="abstractOption"
+              name="hasImage"
               id="noCheckbox"
             />
           </FieldGroup>
         </Typography>
         {this.state.hasImage && (
           <Typography>
-            <SectionHeading>Abstract</SectionHeading>
-            <Textarea onChange={this.onAbstractChangeHandler} value={this.state.abstract} />
+            <SectionHeading>Conditional Fields</SectionHeading>
           </Typography>
         )}
       </div>
