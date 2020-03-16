@@ -1,5 +1,5 @@
 {
-  "id": "entry-editor-extension",
-  "name": "entry-editor-extension",
+  "id": "bodyCopy-extension",
+  "name": "bodyCopy-extension",
   "srcdoc": "./build/index.html"
 }
