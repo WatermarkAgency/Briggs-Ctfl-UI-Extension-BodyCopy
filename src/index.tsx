@@ -29,7 +29,7 @@ class App extends React.Component<AppProps, AppState> {
     super(props);
 
     this.state = {
-      hasImage: false
+      hasImage: true
     };
   }
 
