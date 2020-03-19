@@ -1,5 +1,5 @@
 {
-  "id": "entry-editor-extension",
-  "name": "entry-editor-extension",
+  "id": "briggs-extension",
+  "name": "briggs-extension",
   "srcdoc": "./build/index.html"
 }
