@@ -15,8 +15,9 @@ const sdk = {
     fields: {
       title: { getValue: jest.fn(), setValue: jest.fn() },
       body: { getValue: jest.fn(), setValue: jest.fn() },
-      abstract: { getValue: jest.fn(), setValue: jest.fn() },
-      hasAbstract: { getValue: jest.fn(), setValue: jest.fn() }
+      image: { getValue: jest.fn(), setValue: jest.fn() },
+      imagePosition: { getValue: jest.fn(), setValue: jest.fn() },
+      hasImage: { getValue: jest.fn(), setValue: jest.fn() }
     }
   }
 };
@@ -31,13 +32,14 @@ describe('App', () => {
   it('should read a values from entry.fields.*', () => {
     sdk.entry.fields.title.getValue.mockReturnValue('title-value');
     sdk.entry.fields.body.getValue.mockReturnValue('body-value');
-    sdk.entry.fields.hasAbstract.getValue.mockReturnValue(true);
-    sdk.entry.fields.abstract.getValue.mockReturnValue('abstract-value');
+    sdk.entry.fields.hasImage.getValue.mockReturnValue(true);
+    sdk.entry.fields.image.getValue.mockReturnValue('image-value');
+    sdk.entry.fields.imagePosition.getValue.mockReturnValue('imagePosition-value');
     const { getByTestId } = renderComponent(sdk);
 
     expect(getByTestId('field-title').value).toEqual('title-value');
     expect(getByTestId('field-body').value).toEqual('body-value');
-    expect(getByTestId('field-abstract').value).toEqual('abstract-value');
+    expect(getByTestId('field-image').value).toEqual('image-value');
 
     fireEvent.change(getByTestId('field-body'), {
       target: { value: 'new-body-value' }

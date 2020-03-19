@@ -19,9 +19,9 @@ import './index.css';
 /**
  * To use this demo create a Content Type with the following fields:
  *  title: Short text
- *  body: Long text
- *  hasAbstract: Boolean
- *  abstract: Long text
+ *  copy: Long text
+ *  hasImage: Boolean
+ *  image: Long text
  *
  *  See https://github.com/contentful/create-contentful-extension/blob/master/docs/examples/entry-editor-content-model.json for details.
  */
@@ -36,9 +36,10 @@ export class App extends React.Component {
 
     this.state = {
       title: props.sdk.entry.fields.title.getValue(),
-      body: props.sdk.entry.fields.body.getValue(),
-      abstract: props.sdk.entry.fields.abstract.getValue(),
-      hasAbstract: props.sdk.entry.fields.hasAbstract.getValue() || false
+      copy: props.sdk.entry.fields.copy.getValue(),
+      image: props.sdk.entry.fields.image.getValue(),
+      imagePosition: props.sdk.entry.fields.imagePosition.getValue(),
+      hasImage: props.sdk.entry.fields.hasImage.getValue() || false
     };
   }
 
@@ -48,22 +49,28 @@ export class App extends React.Component {
     this.props.sdk.entry.fields.title.setValue(value);
   };
 
-  onBodyChangeHandler = event => {
+  onCopyChangeHandler = event => {
     const value = event.target.value;
-    this.setState({ body: value });
-    this.props.sdk.entry.fields.body.setValue(value);
+    this.setState({ copy: value });
+    this.props.sdk.entry.fields.copy.setValue(value);
   };
 
-  onAbstractChangeHandler = event => {
+  onImageChangeHandler = event => {
     const value = event.target.value;
-    this.setState({ abstract: value });
-    this.props.sdk.entry.fields.abstract.setValue(value);
+    this.setState({ image: value });
+    this.props.sdk.entry.fields.image.setValue(value);
   };
 
-  onHasAbstractChangeHandler = event => {
-    const hasAbstract = event.target.value === 'yes';
-    this.setState({ hasAbstract });
-    this.props.sdk.entry.fields.hasAbstract.setValue(hasAbstract);
+  onImagePositionChangeHandler = event => {
+    const value = event.target.value;
+    this.setState({ imagePosition: value });
+    this.props.sdk.entry.fields.imagePosition.setValue(value);
+  };
+
+  onhasImageChangeHandler = event => {
+    const hasImage = event.target.value === 'yes';
+    this.setState({ hasImage });
+    this.props.sdk.entry.fields.hasImage.setValue(hasImage);
   };
 
   render() {
@@ -79,34 +86,51 @@ export class App extends React.Component {
           onChange={this.onTitleChangeHandler}
           value={this.state.title}
         />
-        <SectionHeading>Body</SectionHeading>
-        <Textarea testId="field-body" onChange={this.onBodyChangeHandler} value={this.state.body} />
-        <SectionHeading>Has abstract?</SectionHeading>
+        <SectionHeading>Copy</SectionHeading>
+        <Textarea testId="field-copy" onChange={this.onCopyChangeHandler} value={this.state.copy} />
+        <SectionHeading>Has image?</SectionHeading>
         <FieldGroup row={false}>
           <RadioButtonField
             labelText="Yes"
-            checked={this.state.hasAbstract === true}
+            checked={this.state.hasImage === true}
             value="yes"
-            onChange={this.onHasAbstractChangeHandler}
-            name="abstractOption"
+            onChange={this.onhasImageChangeHandler}
+            name="imageOption"
             id="yesCheckbox"
           />
           <RadioButtonField
             labelText="No"
-            checked={this.state.hasAbstract === false}
+            checked={this.state.hasImage === false}
             value="no"
-            onChange={this.onHasAbstractChangeHandler}
-            name="abstractOption"
+            onChange={this.onhasImageChangeHandler}
+            name="imageOption"
             id="noCheckbox"
           />
         </FieldGroup>
-        {this.state.hasAbstract && (
+        {this.state.hasImage && (
           <React.Fragment>
-            <SectionHeading>Abstract</SectionHeading>
+            <SectionHeading>image</SectionHeading>
             <Textarea
-              testId="field-abstract"
-              onChange={this.onAbstractChangeHandler}
-              value={this.state.abstract}
+              testId="field-image"
+              onChange={this.onImageChangeHandler}
+              value={this.state.image}
+            />
+            <SectionHeading>image position</SectionHeading>
+            <RadioButtonField
+              labelText="Left"
+              checked={this.state.imagePosition === "left"}
+              value="left"
+              onChange={this.onhasImageChangeHandler}
+              name="imagePositionOption"
+              id="leftCheckbox"
+            />
+            <RadioButtonField
+              labelText="Right"
+              checked={this.state.imagePosition === "right"}
+              value="right"
+              onChange={this.onhasImageChangeHandler}
+              name="imagePositionOption"
+              id="rightCheckbox"
             />
           </React.Fragment>
         )}
